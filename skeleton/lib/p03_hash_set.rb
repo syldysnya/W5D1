@@ -7,9 +7,15 @@ class HashSet
   end
 
   def insert(key)
-    self[key.hash].push(key.hash)
-    count+=1
-    #self["howdy"]
+    if !include?(key)
+      if count < num_buckets
+        self[key.hash].push(key.hash)
+        @count += 1
+      else
+        resize!
+        self[key.hash].push(key.hash)
+      end
+    end
   end
 
   def include?(key)
@@ -20,7 +26,7 @@ class HashSet
   def remove(key)
     if include?(key)
       self[key.hash].delete(key.hash) 
-      count-=1
+      @count -= 1
     # else
     end
   end
@@ -38,6 +44,15 @@ class HashSet
 
   def resize!
     dup_set = @store.dup
-    @store = Array.new()
+    @store = Array.new(count * 2) { Array.new }
+    @count += 1
+
+    dup_set.each do |bucket|
+      if !bucket.empty?
+        bucket.each do |ele|
+          self[ele].push(ele)
+        end
+      end
+    end
   end
 end

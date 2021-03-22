@@ -14,13 +14,24 @@ class Node
   end
 
   def remove
+    temp = self
+    temp.prev.next = temp.next
     # optional but useful, connects previous link to next link
     # and removes self from list.
   end
 end
 
 class LinkedList
+
+  include Enumerable
+  attr_accessor :head, :tail
+
   def initialize
+    @head = Node.new
+    @tail = Node.new
+
+    @head.next = @tail
+    @tail.prev = @head
   end
 
   def [](i)
