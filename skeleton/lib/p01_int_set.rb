@@ -10,26 +10,27 @@ class MaxIntSet
     if is_valid?(num)
       store[num] = true
     else
-      raise "Out of bounds"
+      validate!(num)
     end
   end
-
+  
   def remove(num)
     self.store[num] = false
   end
-
+  
   def include?(num)
     store[num] == true
   end
-
+  
   private
-
+  
   def is_valid?(num)
     (0...@store.length).include?(num)
   end
-
+  
   #don't know what to do
   def validate!(num)
+    raise "Out of bounds" if !is_valid?(num)
   end
 end
 
@@ -86,6 +87,10 @@ class ResizingIntSet
   end
 
   def remove(num)
+    if include?(num)
+      self[num].delete(num)
+      @count-=1
+    end
   end
 
   def include?(num)
@@ -104,7 +109,15 @@ class ResizingIntSet
   end
 
   def resize!
+    dup_store = @store
     @store = Array.new(count * 2) { Array.new }
-    
+    @count += 1
+    dup_store.each do |bucket|
+      if !bucket.empty?
+        num = bucket.first % num_buckets
+        
+      end
+    end
+    # p "count : #{count}"
   end
 end
