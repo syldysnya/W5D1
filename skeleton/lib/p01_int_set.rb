@@ -82,6 +82,7 @@ class ResizingIntSet
         @count += 1
       else
         resize!
+        self[num].push(num)
       end
     end
   end
@@ -114,10 +115,10 @@ class ResizingIntSet
     @count += 1
     dup_store.each do |bucket|
       if !bucket.empty?
-        num = bucket.first % num_buckets
-        
+        bucket.each do |ele|
+          self[ele] << ele
+        end
       end
     end
-    # p "count : #{count}"
   end
 end
