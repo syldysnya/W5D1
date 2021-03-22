@@ -46,6 +46,16 @@ class LinkedList
   end
 
   def empty?
+    # p self
+    # p head 
+    # p "----------------------"
+    # p tail
+    return true if @head.next == @tail && @tail.prev == @head
+    false
+    # return true if @head.next == nil && @tail.prev == nil
+    # false
+
+    # self.next == nil
   end
 
   def get(key)
