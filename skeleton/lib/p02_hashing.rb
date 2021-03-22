@@ -4,22 +4,29 @@ end
 
 class Array
   def hash
-    self.inject do |acc, ele|
-      acc = acc.to_i ^ ele.to_i
-    end
-    self.map(&:to_s)
-  end
+    num = 0
 
-  # def compare
-  #   (0...self.length).each do |i|
-  #     return false if self[i] != self.hash[i]
-  #   end
-  #   self
-  # end
+    self.each_with_index do |ele, i|
+      num += ele.hash * i
+    end
+
+    num
+  end
 end
  
 class String
   def hash
+    alpha = ('a'..'z').to_a
+    alpha += ('A'..'Z').to_a
+
+    arr = self.split('')
+    
+    num = 0
+
+    arr.map do |ele|
+      idx = alpha.index(ele)
+    end.hash
+    
   end
 end
 
@@ -27,6 +34,7 @@ class Hash
   # This returns 0 because rspec will break if it returns nil
   # Make sure to implement an actual Hash#hash method
   def hash
+    p self
     0
   end
 end
