@@ -7,18 +7,29 @@ class HashSet
   end
 
   def insert(key)
+    self[key.hash].push(key.hash)
+    count+=1
+    #self["howdy"]
   end
 
   def include?(key)
+    # p self
+    self[key.hash].include?(key.hash) ? true : false
   end
 
   def remove(key)
+    if include?(key)
+      self[key.hash].delete(key.hash) 
+      count-=1
+    # else
+    end
   end
 
   private
 
   def [](num)
     # optional but useful; return the bucket corresponding to `num`
+    @store[num % num_buckets]
   end
 
   def num_buckets
@@ -26,5 +37,7 @@ class HashSet
   end
 
   def resize!
+    dup_set = @store.dup
+    @store = Array.new()
   end
 end
